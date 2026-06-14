@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="animate-fade-in">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2>Live Panel: <span class="text-primary">{{ quiz.title }}</span></h2>
+            <h4 class="text-warning">Join Code: <span class="bg-dark px-3 py-1 rounded" style="letter-spacing: 2px;">{{ quiz.quiz_code }}</span></h4>
+        </div>
+        <div class="col-md-4 text-end">
+            <div class="glass-panel d-inline-block px-4 py-2">
+                <span class="fs-4">👥 <span id="participant-count">0</span> Joined</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-3">
+            <div class="glass-card p-4">
+                <h4 class="mb-4">Controls</h4>
+                <div class="d-grid gap-3">
+                    {% if session %}
+                        {% if session.status == 'pending' %}
+                            <button class="btn btn-success" onclick="controlQuiz('start_quiz', '{{ session.id }}')">Start Quiz</button>
+                        {% elif session.status == 'active' %}
+                            <button class="btn btn-warning" onclick="controlQuiz('pause_quiz', '{{ session.id }}')">Pause Quiz</button>
+                            <button class="btn btn-info" onclick="controlQuiz('next_question', '{{ session.id }}')">Next Question</button>
+                            <button class="btn btn-danger mt-4" onclick="controlQuiz('end_quiz', '{{ session.id }}')">End Quiz</button>
+                        {% elif session.status == 'paused' %}
+                            <button class="btn btn-success" onclick="controlQuiz('resume_quiz', '{{ session.id }}')">Resume Quiz</button>
+                            <button class="btn btn-danger mt-4" onclick="controlQuiz('end_quiz', '{{ session.id }}')">End Quiz</button>
+                        {% elif session.status == 'ended' %}
+                            <p class="text-muted">Quiz Ended.</p>
+                            <a href="{{ url_for('main.admin_analytics') }}" class="btn btn-outline-info mb-2">View Analytics</a>
+                            <form method="POST" action="{{ url_for('main.create_new_session', quiz_id=quiz.id) }}">
+                                <button type="submit" class="btn btn-gradient w-100">Create New Session</button>
+                            </form>
+                        {% endif %}
+                    {% else %}
+                        <p class="text-muted">No session exists.</p>
+                        <form method="POST" action="{{ url_for('main.create_new_session', quiz_id=quiz.id) }}">
+                            <button type="submit" class="btn btn-gradient w-100">Create Session</button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-9">
+            <div class="glass-card p-4 min-vh-50">
+                <h4>Live Leaderboard</h4>
+                <div class="table-responsive mt-3">
+                    <table class="table table-dark table-hover bg-transparent text-white">
+                        <thead>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Participant</th>
+                                <th>Score</th>
+                                <th>Accuracy</th>
+                                <th>Avg Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="leaderboard-body">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{% if session %}
+<script src="{{ url_for('static', filename='js/host.js') }}?v=2"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        pollSessionStatus('{{ session.id }}');
+    });
+</script>
+{% endif %}
+{% endblock %}

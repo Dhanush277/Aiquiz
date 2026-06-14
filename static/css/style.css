@@ -1,0 +1,169 @@
+:root {
+  --bg-color: #0f172a;
+  --text-color: #f8fafc;
+  --primary: #2563EB;
+  --primary-hover: #1d4ed8;
+  --secondary: #7C3AED;
+  --accent: #06B6D4;
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --success: #10b981;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+}
+
+body {
+  background: linear-gradient(135deg, var(--bg-color), #1e1b4b);
+  color: var(--text-color);
+  font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 1rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.glass-card {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 0.75rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 40px rgba(37, 99, 235, 0.2);
+}
+
+/* Gradients */
+.text-gradient {
+  background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.btn-gradient {
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.btn-gradient:hover {
+  background: linear-gradient(90deg, var(--secondary), var(--primary));
+  transform: scale(1.05);
+  box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+  color: white;
+}
+
+/* Form Controls */
+.form-control, .form-select {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.form-control:focus, .form-select:focus {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent);
+  color: white;
+  box-shadow: 0 0 0 0.25rem rgba(6, 182, 212, 0.25);
+}
+
+/* Navbar */
+.navbar-glass {
+  background: rgba(15, 23, 42, 0.8) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* Quiz Timer */
+.circular-timer {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.timer-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+/* Options */
+.quiz-option {
+  cursor: pointer;
+  border: 2px solid var(--glass-border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  transition: all 0.2s ease;
+}
+
+.quiz-option:hover:not(.locked) {
+  border-color: var(--accent);
+  background: rgba(6, 182, 212, 0.1);
+}
+
+.quiz-option.selected {
+  border-color: var(--primary);
+  background: rgba(37, 99, 235, 0.2);
+}
+
+.quiz-option.locked {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Leaderboard */
+.leaderboard-row {
+  transition: all 0.3s ease;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.leaderboard-row:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Progress Bar */
+.progress-glass {
+  background: rgba(255, 255, 255, 0.1);
+  height: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-bar-gradient {
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  height: 100%;
+  transition: width 0.4s ease;
+}

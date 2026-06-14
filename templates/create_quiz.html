@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center animate-fade-in">
+    <div class="col-md-8">
+        <div class="glass-card p-4">
+            <h3 class="mb-4 text-gradient">Create New Quiz</h3>
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Quiz Title</label>
+                    <input type="text" class="form-control" name="title" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" name="description" rows="3"></textarea>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Category</label>
+                        <select class="form-select" name="category">
+                            <option>General Knowledge</option>
+                            <option>Technology</option>
+                            <option>Science</option>
+                            <option>History</option>
+                            <option>Mathematics</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Difficulty</label>
+                        <select class="form-select" name="difficulty">
+                            <option>Beginner</option>
+                            <option>Intermediate</option>
+                            <option>Advanced</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-gradient mt-3 px-4">Create & Proceed</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

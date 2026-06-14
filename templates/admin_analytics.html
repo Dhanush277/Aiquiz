@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="animate-fade-in">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Admin Analytics</h2>
+        <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-light">Back to Dashboard</a>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-6 col-lg-3">
+            <div class="glass-panel p-3 text-center border-primary">
+                <h6 class="text-muted">Total Participants</h6>
+                <h2 class="text-primary">{{ total_participants }}</h2>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="glass-panel p-3 text-center border-success">
+                <h6 class="text-muted">Avg Platform Accuracy</h6>
+                <h2 class="text-success">{{ avg_score }}%</h2>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="glass-panel p-3 text-center border-warning">
+                <h6 class="text-muted">ML Predictions Made</h6>
+                <h2 class="text-warning">{{ total_predictions }}</h2>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+            <div class="glass-panel p-3 text-center border-info">
+                <h6 class="text-muted">AI Reports Generated</h6>
+                <h2 class="text-info">{{ total_ai }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="glass-card p-4">
+                <h5 class="mb-3">Performance Distribution (ML)</h5>
+                <canvas id="performanceChart"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="glass-card p-4">
+                <h5 class="mb-3">Average Response Time vs Accuracy</h5>
+                <canvas id="scatterChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const pieData = {{ pie_data | tojson }};
+    const scatterData = {{ scatter_data | tojson }};
+
+    const ctxPie = document.getElementById('performanceChart').getContext('2d');
+    new Chart(ctxPie, {
+        type: 'doughnut',
+        data: {
+            labels: ['High Performer', 'Average Performer', 'Low Performer'],
+            datasets: [{
+                data: pieData,
+                backgroundColor: [
+                    '#10b981',
+                    '#3b82f6',
+                    '#ef4444'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            plugins: {
+                legend: { labels: { color: 'white' } }
+            }
+        }
+    });
+
+    const ctxScatter = document.getElementById('scatterChart').getContext('2d');
+    new Chart(ctxScatter, {
+        type: 'scatter',
+        data: {
+            datasets: [{
+                label: 'Participants',
+                data: scatterData,
+                backgroundColor: '#06b6d4'
+            }]
+        },
+        options: {
+            scales: {
+                x: { title: { display: true, text: 'Avg Response Time (s)', color: 'white' }, ticks: { color: 'white' } },
+                y: { title: { display: true, text: 'Accuracy (%)', color: 'white' }, ticks: { color: 'white' } }
+            },
+            plugins: {
+                legend: { labels: { color: 'white' } }
+            }
+        }
+    });
+</script>
+{% endblock %}

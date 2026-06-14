@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center animate-fade-in">
+    <div class="col-lg-10">
+        <h2 class="text-center mb-4 text-gradient">Your Quiz Results</h2>
+        
+        <div class="row g-4 mb-4">
+            <!-- Score Card -->
+            <div class="col-md-4">
+                <div class="glass-card p-4 text-center h-100 border-primary">
+                    <h5 class="text-muted">Total Score</h5>
+                    <h1 class="display-3 fw-bold text-primary">{{ score.score if score else 0 }}</h1>
+                    <p class="mb-0 text-success">Rank: #{{ score.rank if score else '-' }}</p>
+                </div>
+            </div>
+            
+            <!-- Accuracy Card -->
+            <div class="col-md-4">
+                <div class="glass-card p-4 text-center h-100 border-accent">
+                    <h5 class="text-muted">Accuracy</h5>
+                    <h1 class="display-3 fw-bold text-accent">{{ score.accuracy if score else 0 }}%</h1>
+                    <p class="mb-0 text-warning">Avg Time: {{ score.average_response_time if score else 0 }}s</p>
+                </div>
+            </div>
+            
+            <!-- ML Prediction -->
+            <div class="col-md-4">
+                <div class="glass-card p-4 text-center h-100 border-secondary">
+                    <h5 class="text-muted">Performance Profile</h5>
+                    <h3 class="mt-3 text-secondary fw-bold">
+                        {% if prediction %}
+                            {{ prediction.predicted_category }}
+                        {% else %}
+                            Analyzing...
+                        {% endif %}
+                    </h3>
+                    <p class="small text-muted mt-2">Powered by ML</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- AI Feedback -->
+        <div class="glass-card p-5 mb-4 border-info">
+            <h4 class="text-info mb-4">🤖 AI Tutor Feedback</h4>
+            {% if feedback %}
+                <div class="ai-report text-light lh-lg">
+                    {{ feedback.feedback_text | safe }}
+                </div>
+            {% else %}
+                <p>No AI feedback generated.</p>
+            {% endif %}
+        </div>
+        
+        <div class="text-center">
+            <a href="{{ url_for('main.dashboard') }}" class="btn btn-gradient btn-lg px-5">Return to Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

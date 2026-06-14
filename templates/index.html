@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row align-items-center min-vh-75 animate-fade-in">
+    <div class="col-lg-6 text-center text-lg-start mb-5 mb-lg-0">
+        <h1 class="display-4 fw-bold mb-4">
+            Next-Gen <span class="text-gradient">AI-Powered</span> Live Quizzes
+        </h1>
+        <p class="lead mb-4 text-light">
+            Engage your audience with real-time multiplayer quizzes, powered by 
+            <span class="text-info fw-bold">Machine Learning</span> predictions and 
+            <span class="text-warning fw-bold">Generative AI</span> personalized feedback.
+        </p>
+        <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-lg-start">
+            {% if not current_user.is_authenticated %}
+                <a href="{{ url_for('main.register') }}" class="btn btn-gradient btn-lg px-5 py-3 rounded-pill">Get Started</a>
+                <a href="{{ url_for('main.login') }}" class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill">Login</a>
+            {% else %}
+                <a href="{{ url_for('main.dashboard') }}" class="btn btn-gradient btn-lg px-5 py-3 rounded-pill">Go to Dashboard</a>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="col-lg-6">
+        <div class="glass-card p-4 text-center">
+            <h3 class="mb-4">Why choose us?</h3>
+            <div class="row g-4">
+                <div class="col-6">
+                    <div class="p-3 glass-panel h-100">
+                        <h4 class="text-primary">⚡ Real-Time</h4>
+                        <p class="small mb-0">Live leaderboard & synchronised polling</p>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="p-3 glass-panel h-100">
+                        <h4 class="text-accent">🧠 ML Insights</h4>
+                        <p class="small mb-0">Scikit-Learn powered performance categorization</p>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="p-3 glass-panel h-100">
+                        <h4 class="text-warning">🤖 GenAI</h4>
+                        <p class="small mb-0">Gemini/OpenAI personalized study reports</p>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="p-3 glass-panel h-100">
+                        <h4 class="text-success">🛡️ Secure</h4>
+                        <p class="small mb-0">Backend timer validation & anti-cheat</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

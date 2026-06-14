@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block body_attr %}data-participant-id="{{ participant_id }}"{% endblock %}
+
+{% block content %}
+<!-- Waiting Screen -->
+<div id="waiting-screen" class="row justify-content-center min-vh-50 align-items-center animate-fade-in">
+    <div class="col-md-6 text-center">
+        <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status"></div>
+        <h3 class="mt-4" id="waiting-msg">Waiting for Host to start...</h3>
+    </div>
+</div>
+
+<!-- Quiz UI -->
+<div id="quiz-container" class="d-none animate-fade-in">
+    <div class="glass-card p-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <span id="progress-text" class="fw-bold text-muted">Question 1 of X</span>
+            <div class="circular-timer">
+                <div class="rounded-circle border border-3 border-info d-flex align-items-center justify-content-center" style="width: 4rem; height: 4rem;">
+                    <span class="timer-text fs-4" id="timer-text">--</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="progress-glass mb-4">
+            <div id="progress-bar" class="progress-bar-gradient" style="width: 0%;"></div>
+        </div>
+        
+        <h3 id="question-text" class="mb-4 text-center">Loading...</h3>
+        
+        <div id="options-container">
+            <!-- Loaded via JS -->
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/participant.js') }}?v=2"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        startParticipantPolling('{{ session_id }}', '{{ participant_id }}');
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row animate-fade-in">
+    <div class="col-md-8">
+        <div class="glass-card p-4">
+            <h3 class="text-gradient mb-4">Add Question</h3>
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Question Text</label>
+                    <textarea class="form-control" name="question_text" rows="2" required></textarea>
+                </div>
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label text-warning">Option A</label>
+                        <input type="text" class="form-control" name="option_a" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-info">Option B</label>
+                        <input type="text" class="form-control" name="option_b" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-success">Option C</label>
+                        <input type="text" class="form-control" name="option_c" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label text-danger">Option D</label>
+                        <input type="text" class="form-control" name="option_d" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Correct Answer</label>
+                        <select class="form-select" name="correct_answer" required>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Time Limit (seconds)</label>
+                        <input type="number" class="form-control" name="time_limit" value="30" min="5" max="120" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Explanation (shown in review)</label>
+                    <textarea class="form-control" name="explanation" rows="2"></textarea>
+                </div>
+                
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-light">Done Adding</a>
+                    <button type="submit" class="btn btn-gradient">Save Question</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mt-4 mt-md-0">
+        <div class="glass-card p-4 h-100">
+            <h4>Questions Added ({{ questions|length }})</h4>
+            <ul class="list-group list-group-flush mt-3" style="background: transparent;">
+                {% for q in questions %}
+                    <li class="list-group-item bg-transparent text-white border-bottom border-secondary">
+                        <small>Q. {{ q.question_text[:50] }}...</small>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
