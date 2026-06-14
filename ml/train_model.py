@@ -84,7 +84,10 @@ def train_and_save_model():
 def ensure_model_trained():
     if not os.path.exists(MODEL_PATH) or not os.path.exists(SCALER_PATH):
         print("Training model for the first time...")
-        train_and_save_model()
+        try:
+            train_and_save_model()
+        except Exception as e:
+            print(f"Could not train model (likely read-only filesystem on Vercel): {e}")
 
 def predict_performance(score, accuracy, response_time, questions_attempted):
     ensure_model_trained()

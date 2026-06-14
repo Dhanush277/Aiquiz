@@ -7,15 +7,6 @@ from database.db import supabase
 
 # Setup Absolute Paths for Vercel Compatibility
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MODEL_PATH = os.path.join(BASE_DIR, 'ml', 'model.pkl')
-SCALER_PATH = os.path.join(BASE_DIR, 'ml', 'scaler.pkl')
-
-try:
-    model = joblib.load(MODEL_PATH)
-    scaler = joblib.load(SCALER_PATH)
-except:
-    model = None
-    scaler = None
 
 # Initialize APIs
 if Config.GEMINI_API_KEY:
@@ -48,7 +39,7 @@ def generate_and_save_feedback(participant_id, score_data, predicted_category):
     # Try Gemini First
     if Config.GEMINI_API_KEY:
         try:
-            model = genai.GenerativeModel('gemini-1.5-pro-latest')
+            model = genai.GenerativeModel('gemini-1.5-flash')
             response = model.generate_content(prompt)
             response_text = response.text
         except Exception as e:
