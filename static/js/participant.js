@@ -104,7 +104,15 @@ function selectOption(ans, el) {
                   el.style.borderColor = "var(--danger)";
                   el.style.background = "rgba(239, 68, 68, 0.2)";
               }
+          } else {
+              // Unlock so they know it failed, or show error
+              el.style.borderColor = "var(--warning)";
+              el.style.background = "rgba(245, 158, 11, 0.2)";
+              const pText = document.getElementById('progress-text');
+              if (pText) pText.innerText = data.error || "Failed to submit answer";
           }
+      }).catch(err => {
+          console.error(err);
       });
 }
 
@@ -120,6 +128,11 @@ function startLocalTimer(seconds) {
             if (!isAnswerLocked) {
                 isAnswerLocked = true;
                 document.querySelectorAll('.quiz-option').forEach(opt => opt.classList.add('locked'));
+            }
+            const pText = document.getElementById('progress-text');
+            if (pText && !pText.innerText.includes("Failed")) {
+                pText.innerText = "Time's Up! Waiting for Host...";
+                pText.classList.add("text-warning");
             }
         }
         updateTimerUI(time);
